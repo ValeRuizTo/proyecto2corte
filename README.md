@@ -51,6 +51,8 @@ El sistema corresponde a una máquina clasificadora de objetos por color (sortin
   - En cada compartimiento de descarga hay un sensor infrarrojo final, encargado de verificar si la pieza llegó correctamente.
   - Si la pieza fue clasificada, el sistema detiene la banda transportadora y reinicia el ciclo para el siguiente objeto.
 
+![.](imagenesWiki/diagrama.jpg)
+
 
 
 ## 6. Referencias
