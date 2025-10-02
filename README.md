@@ -301,6 +301,7 @@ Imagen de Base:
 
 Interfaz HMI
 
+![.](imagenesWiki/hmi.png)
 
 
 ## 6. Referencias
