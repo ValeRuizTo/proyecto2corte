@@ -116,7 +116,7 @@ El sistema se diseñó bajo un enfoque de control secuencial por etapas (Step Se
 
 El siguiente diagrama muestra la secuencia de operación implementada:
 
-![.](imagenesWiki/secuencia.jpg)
+![.](imagenesWiki/secuencia.png)
 
 #### Descripción de la secuencia:
 
