@@ -69,6 +69,40 @@ Las siguientes restricciones de diseño del prototipo se establecieron siguiendo
 | RNF-03 | No funcional| Escalabilidad            | El sistema debe permitir la ampliación hacia más colores o integración con otros módulos. | Baja     |  El controlador dispone de entradas/salidas adicionales que permiten integrar más sensores o módulos industriales. | Limitado por número de sensores/entradas del controlador | PLC o controlador con entradas libres     | Facilita futuras expansiones del proyecto.            |
 
 
+#### Criterios y estandares de diseño establecidos
+El diseño del prototipo de Sorting Line with Color Detection se fundamenta en los lineamientos de la norma ISO/IEC/IEEE 29148:2018 que se refiere a Systems and Software Engineering, Life Cycle Processes, Requirements Engineering [3], la cual establece directrices para la definición de requerimientos funcionales y no funcionales en proyectos de ingeniería. Adicionalmente, se adoptaron estándares aplicables en la industria de automatización y control, asegurando que el sistema sea seguro, escalable, reproducible y mantenible.
+
+##### Principios generales de diseño (IEEE 29148:2018)
+
+- Claridad y no ambigüedad: cada requerimiento debe estar expresado de forma precisa, sin interpretaciones múltiples.
+
+- Corrección: los requerimientos deben reflejar exactamente las necesidades del proceso de clasificación automatizado.
+
+- Consistencia: los requerimientos no deben entrar en conflicto entre sí.
+
+- Rastreo (Traceability): los requerimientos se deben poder vinculae con un objetivo, módulo de diseño, implementación y prueba.
+
+- Viabilidad técnica: los requerimientos deben ser alcanzables con los recursos de hardware/software disponibles.
+
+- Verificabilidad: todo requerimiento debe poder validarse mediante pruebas medibles y repetibles.
+
+- Priorización: los requerimientos deben clasificarse en críticos, deseables y opcionales según el impacto en la operación.
+
+#### 
+
+##### Criterios específicos del proyecto
+
+- El sistema debe clasificar piezas de acuerdo con colores rojo, azul y verde, con un nivel de precisión ≥ 95 %.
+
+- El tiempo de respuesta entre la detección y la actuación debe ser ≤ 200 ms.
+
+- El prototipo debe permitir escalabilidad para incluir nuevos sensores/actuadores.
+
+- El sistema debe funcionar de forma continua durante al menos 2 horas sin intervención manual.
+
+- El código y los esquemáticos deben estar completamente documentados para garantizar mantenibilidad.
+
+
 
 
 
@@ -78,3 +112,6 @@ Las siguientes restricciones de diseño del prototipo se establecieron siguiendo
 [1] fischertechnik GmbH, "Sorting Line with Color Detection 24 V", fischertechnik, Art.-No. 536633. Disponible en: https://www.fischertechnik.de/en/products/industry-and-universities/training-models/536633-sorting-line-with-color-detection-24v 
 
 [2] Emerson, “Válvulas solenoide normalmente cerradas,” Emerson. [En línea]. Disponible: https://www.https://www.emerson.com/es-py/catalog/solenoid-valves/normally-closed-solenoid-valves?fetchFacets=true#facet:&partsFacet:&modelsFacet:&facetLimit:&searchTerm:&partsSearchTerm:&modelsSearchTerm:&productBeginIndex:0&partsBeginIndex:0&modelsBeginIndex:0&orderBy:&partsOrderBy:&modelsOrderBy:&pageView:grid&minPrice:&maxPrice:&pageSize:&facetRange
+
+[3] ISO/IEC/IEEE, ISO/IEC/IEEE 29148:2018 Systems and software engineering — Life cycle processes — Requirements engineering, 2nd ed. Geneva, Switzerland: International Organization for Standardization, Nov. 2018. [Online]. Available: https://www.iso.org/standard/72089.html
+
