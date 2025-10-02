@@ -191,6 +191,21 @@ El siguiente diagrama muestra la secuencia de operación implementada:
   - El sistema queda listo para el siguiente objeto.
 
 ### Programación Ladder
+
+#### ¿Qué es un TON?
+Los TON permiten crear retardos controlados en la secuencia, garantizando que los actuadores no se activen todos al mismo tiempo.
+  - Cuando la entrada IN del TON pasa a TRUE (1):
+
+  - El temporizador comienza a contar el tiempo programado (PT = tiempo de preset).
+  - Si la entrada permanece en 1 hasta que el tiempo llega a PT:
+    - La salida Q pasa a TRUE (1).
+
+  - Mientras tanto, la variable ET (Elapsed Time) guarda el tiempo transcurrido.
+
+  - Si la entrada IN vuelve a FALSE (0) antes de alcanzar el tiempo PT:
+
+    - El temporizador se resetea, ET vuelve a 0 y Q se queda en 0.
+      
 ![.](imagenesWiki/codesys1.png)
 
 ![.](imagenesWiki/codesys2.png)
@@ -198,6 +213,94 @@ El siguiente diagrama muestra la secuencia de operación implementada:
 ![.](imagenesWiki/codesys3.png)
 
 ![.](imagenesWiki/codesys4.png)
+
+
+#### Descripción del Programa Ladder
+
+- Red 1: Arranque y paro
+  - Botón Start enciende IRStart si no está activo Stop.
+  - Se establece la condición inicial del sistema.
+
+- Red 2: Activación de motores
+
+  - Con IRStart y el sensor F1 activo, se activan M1 y M2.
+
+- Red 3: Secuencia de validación
+
+  - Si se detecta IRT1, IRT2 o IRT3 junto con F2, se activa la señal IRF2.
+
+  - Esto sincroniza los pasos siguientes.
+
+- Red 4–5: Control de temporización de V1
+
+  - Si IRF2 y los motores están activos, se inicia el TON1 (1s).
+
+  - Al finalizar, se activa la válvula V1 y se resetea IRT1.
+
+- Red 6–10: Control de V2
+
+  - Uso de TON2 y TON3 con IRTV1 y IRF2.
+
+  - Activan válvula V2 después de un retardo de 2s.
+
+  - Luego V2 se apaga tras TON4 (0.5s) y habilita F4.
+
+- Red 11–15: Control de V3
+
+  - Similar al anterior, con TON5 (3s) y TON6 (0.5s).
+
+  - Maneja la válvula V3, activando F5 y reseteando las condiciones previas.
+
+- Red 16: Apagado de motores
+
+  - Cuando cualquiera de los sensores finales (F3, F4, F5) está activo, se apagan M1 y M2.
+
+- Red 17: Reset general
+
+  - El botón Stop resetea:
+
+  - M1, M2, IRStart, IRF2, IRT1, IRT2, IRT3, etc.
+
+  - Esto asegura que el sistema vuelva a estado inicial.
+
+#### Contadores (CTU)
+
+- CTU_0 → Conteo asociado a F3 → almacena en CVCOUNTERC1.
+
+- CTU_1 → Conteo asociado a F4 → almacena en CVCOUNTERC2.
+
+- CTU_2 → Conteo asociado a F5 → almacena en CVCOUNTERC3.
+
+#### Secuencia de Operación
+
+- Arranque: Se presiona Start, se activa IRStart, luego M1 y M2.
+
+- Sensor F1 confirma inicio → motores siguen activos.
+
+- Secuencia de válvulas:
+
+- V1 tras 1s
+
+- V2 tras 2s
+
+- V3 tras 3s
+
+- Sensores F3, F4, F5 apagan motores en condiciones finales.
+
+- Contadores  registran ciclos de cada válvula.
+
+- Stop reinicia todo el sistema.
+
+
+## Implementación digital (codesys)
+El sistema fue implementado en CODESYS como un gemelo digital, permitiendo la simulación y validación del proceso. La interfaz HMI se diseñó con una vista superior del modelo físico, lo que facilita la representación visual de cada elemento y el control intuitivo del sistema.
+
+Imagen de Base:
+
+![.](imagenesWiki/imagenes.jpg)
+
+Interfaz HMI
+
 
 
 ## 6. Referencias
