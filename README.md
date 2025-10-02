@@ -106,6 +106,49 @@ El diseño del prototipo de Sorting Line with Color Detection se fundamenta en l
 ### Definición de variables
 
 
+## 2.3 Definición de Variables  
+
+| Nombre        | Tipo   | Atributo           | Descripción                                                                 |
+|---------------|--------|--------------------|-----------------------------------------------------------------------------|
+| `Stop`        | BOOL   | Entrada            | Pulsador de paro normal del sistema                                         |
+| `Start`       | BOOL   | Entrada            | Pulsador de inicio del sistema                                              |
+| `IRStart`     | BOOL   | Entrada            | Sensor IR inicial (detecta objeto en la entrada de la cinta)                |
+| `F1`          | BOOL   | Entrada            | Final de carrera 1 / sensor de seguridad asociado                           |
+| `M1`          | BOOL   | Salida             | Motor 1 (cinta transportadora principal)                                    |
+| `M2`          | BOOL   | Salida             | Motor 2 (elemento auxiliar, p. ej. vibrador de piezas)                      |
+| `C1`          | BOOL   | Interna / Marcador | Estado de clasificación para color 1                                        |
+| `IRT1`        | BOOL   | Entrada            | Sensor IR asociado a la posición de expulsión 1                             |
+| `TON1`        | TON    | Temporizador       | Temporizador para retardo de activación de V1                               |
+| `V1`          | BOOL   | Salida             | Válvula 1 (desvía pieza color 1)                                            |
+| `IRTV1`       | BOOL   | Entrada            | Sensor IR de verificación en compartimiento 1                               |
+| `ET1`         | TIME   | Tiempo             | Tiempo acumulado de TON1                                                    |
+| `ET`          | TIME   | Tiempo             | Variable auxiliar de tiempo general                                         |
+| `TON2`        | TON    | Temporizador       | Temporizador para clasificación color 2                                     |
+| `F3`          | BOOL   | Entrada            | Final de carrera 3 / sensor de seguridad asociado                           |
+| `CVCOUNTERC1` | WORD   | Contador           | Contador de piezas clasificadas en compartimiento 1                         |
+| `C2`          | BOOL   | Interna / Marcador | Estado de clasificación para color 2                                        |
+| `IRT2`        | BOOL   | Entrada            | Sensor IR asociado a la posición de expulsión 2                             |
+| `ET2`         | TIME   | Tiempo             | Tiempo acumulado de TON2                                                    |
+| `TON3`        | TON    | Temporizador       | Temporizador auxiliar para expulsión en color 2                             |
+| `TON4`        | TON    | Temporizador       | Temporizador auxiliar para control de M2 o sincronización                   |
+| `V2`          | BOOL   | Salida             | Válvula 2 (desvía pieza color 2)                                            |
+| `IRTV2`       | BOOL   | Entrada            | Sensor IR de verificación en compartimiento 2                               |
+| `F4`          | BOOL   | Entrada            | Final de carrera 4 / sensor de seguridad asociado                           |
+| `CVCOUNTERC2` | WORD   | Contador           | Contador de piezas clasificadas en compartimiento 2                         |
+| `C3`          | BOOL   | Interna / Marcador | Estado de clasificación para color 3                                        |
+| `IRT3`        | BOOL   | Entrada            | Sensor IR asociado a la posición de expulsión 3                             |
+| `TON5`        | TON    | Temporizador       | Temporizador para expulsión en color 3                                      |
+| `TON6`        | TON    | Temporizador       | Temporizador auxiliar en clasificación color 3                              |
+| `ET3`         | TIME   | Tiempo             | Tiempo acumulado de TON5 / TON6                                             |
+| `V3`          | BOOL   | Salida             | Válvula 3 (desvía pieza color 3)                                            |
+| `IRTV3`       | BOOL   | Entrada            | Sensor IR de verificación en compartimiento 3                               |
+| `F5`          | BOOL   | Entrada            | Final de carrera 5 / sensor de seguridad asociado                           |
+| `CVCOUNTERC3` | WORD   | Contador           | Contador de piezas clasificadas en compartimiento 3                         |
+| `F2`          | BOOL   | Entrada            | Final de carrera 2 / sensor de seguridad asociado                           |
+| `IRF2`        | BOOL   | Entrada            | Sensor IR asociado al final de compartimiento 2                             |
+
+
+
 ## Desarrollo del Sistema
 
 ![.](imagenesWiki/diagrama.jpg)
@@ -147,8 +190,14 @@ El siguiente diagrama muestra la secuencia de operación implementada:
   - Una vez completada la expulsión, las salidas se resetean (R).
   - El sistema queda listo para el siguiente objeto.
 
+### Programación Ladder
+![.](imagenesWiki/codesys1.png)
 
+![.](imagenesWiki/codesys2.png)
 
+![.](imagenesWiki/codesys3.png)
+
+![.](imagenesWiki/codesys4.png)
 
 
 ## 6. Referencias
