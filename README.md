@@ -304,6 +304,29 @@ Interfaz HMI
 ![.](imagenesWiki/hmi.png)
 
 
+## Implementacion fisica
+
+## Validación
+
+### Validación manual (sin PLC)
+
+- Se conectaron los actuadores y sensores directamente a una lógica de 9V.
+
+  - Se comprobó:
+    - Funcionamiento del motor de la banda.
+    - Respuesta de cada sensor.
+    - Activación de cada válvula neumática.
+
+### Validación con PLC
+
+- Se probó la secuencia completa en CODESYS y con el prototipo físico.
+
+- Se registraron tiempos de respuesta y conteo de piezas clasificadas.
+
+- Se verificó que el sistema se detuviera ante pulsación de STOP o E_STOP.
+
+## Conclusiones
+
 ## 6. Referencias
 
 [1] fischertechnik GmbH, "Sorting Line with Color Detection 24 V", fischertechnik, Art.-No. 536633. Disponible en: https://www.fischertechnik.de/en/products/industry-and-universities/training-models/536633-sorting-line-with-color-detection-24v 
