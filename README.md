@@ -91,7 +91,7 @@ El diseño del prototipo de Sorting Line with Color Detection se fundamenta en l
 
 #### Estandar IEC 61131-3
 - Estándar internacional para lenguajes de programación de  Controladores Lógicos Programables (PLC) industriales, proporcionando un conjunto de lenguajes y estructuras comunes para la automatización, asegurando la independencia del fabricante y permitiendo la portabilidad y reutilización de código (incluye Ladder). [4]
-- 
+
 ##### Criterios específicos del proyecto
 
 - El sistema debe clasificar piezas de acuerdo con colores rojo, azul y verde, con un nivel de precisión ≥ 95 %.
@@ -102,11 +102,67 @@ El diseño del prototipo de Sorting Line with Color Detection se fundamenta en l
 
 - El código y los esquemáticos deben estar completamente documentados para garantizar mantenibilidad.
 
+### Variables Generales del Sistema
+| Name      | Attrib  | Type  | Comment                                                                |
+|-----------|---------|-------|------------------------------------------------------------------------|
+| Input0_0  | [Input] | BOOL  | Sensor F1 — Detecta llegada pieza (activa banda M1 y motor válvula M2) |
+| Input0_1  | [Input] | BOOL  | Detector de color C1 — Blanco                                          |
+| Input0_2  | [Input] | BOOL  | Detector de color C2 — Rojo                                            |
+| Input0_3  | [Input] | BOOL  | Detector de color C3 — Azul                                            |
+| Input0_4  | [Input] | BOOL  | Sensor F2 — Zona temporizado (dispara el timer seleccionado por color) |
+| Input0_5  | [Input] | BOOL  | Sensor F3 — Llegada a salida/estación 1 (posición V1)                  |
+| Input0_6  | [Input] | BOOL  | Sensor F4 — Llegada a salida/estación 2 (posición V2)                  |
+| Input0_7  | [Input] | BOOL  | Sensor F5 — Llegada a salida/estación 3 (posición V3)                  |
+| Input0_8  | [Input] | BOOL  | START — Pulsador de inicio (habilita ciclo)                            |
+| Input0_9  | [Input] | BOOL  | STOP — Pulsador de paro (paro de emergencia / detención)               |
+| Output0_0 | [Output]| BOOL  | Motor M1 — Banda transportadora (arranque/parada)                      |
+| Output0_1 | [Output]| BOOL  | Motor M2 — Motor de la válvula (o alimentador de válvulas)             |
+| Output0_2 | [Output]| BOOL  | V1 — Solenoide / válvula para piezas blancas                           |
+| Output0_3 | [Output]| BOOL  | V2 — Solenoide / válvula para piezas rojas                             |
+| Output0_4 | [Output]| BOOL  | V3 — Solenoide / válvula para piezas azules                            |
 
-### Definición de variables
+
+### Diagrama de función secuencial
+
+A partir de las variables generales definidas anteriormente, el sistema se diseñó bajo un enfoque de control secuencial por etapas (Step Sequence Control). Cada etapa (S) representa un estado del proceso, mientras que las transiciones se activan cuando se cumplen condiciones de sensores (entradas).
+
+El siguiente diagrama muestra la secuencia de operación implementada:
+
+<img width="1216" height="913" alt="SequentialChartSortingLine" src="https://github.com/user-attachments/assets/3c64b188-6eba-4a44-9ff2-af36ffa9c116" />
 
 
-## 2.3 Definición de Variables  
+#### Descripción de la secuencia:
+
+
+1. Inicio (S000)
+
+ - Estado inicial del sistema.
+ - Se asegura de reiniciar todas las salidas (Output_0, Output_1, Output_2, Output_3).
+
+2. Ejecución inicial (S001)
+
+  - Condición de inicio: Input_0 o Input_8.
+  - Acciones: activa las salidas principales (Output_0 y Output_1) que corresponden al motor de la cinta transportadora.
+
+3. Detección de pieza (S002.1)
+
+  - Condición: sensor de entrada (Input0_1) detecta una pieza.
+  - Acción: habilita Output0_2 (p. ej., registro del sensor y arranque de temporización).
+
+4. Clasificación (S002.2 y S002.3)
+
+  - Dependiendo de la detección de color:
+    - Input0_2 activa Output0_3 (válvula de clasificación 1).
+    - Input0_3 activa Output0_4 (válvula de clasificación 2).
+
+5. Fin de ciclo y reset (S002.2.2 y S002.3.2)
+
+  - Una vez completada la expulsión, las salidas se resetean (R).
+  - El sistema queda listo para el siguiente objeto.
+
+
+
+### 2.3 Definición de Variables para la implementación ladder
 
 | Nombre        | Tipo   | Atributo           | Descripción                                                                 |
 |---------------|--------|--------------------|-----------------------------------------------------------------------------|
@@ -153,42 +209,6 @@ El diseño del prototipo de Sorting Line with Color Detection se fundamenta en l
 
 ![.](imagenesWiki/diagrama.jpg)
 
-
-### Diagrama de función secuencial
-El sistema se diseñó bajo un enfoque de control secuencial por etapas (Step Sequence Control). Cada etapa (S) representa un estado del proceso, mientras que las transiciones se activan cuando se cumplen condiciones de sensores (entradas).
-
-El siguiente diagrama muestra la secuencia de operación implementada:
-
-![.](imagenesWiki/secuencia.png)
-
-#### Descripción de la secuencia:
-
-
-1. Inicio (S000)
-
- - Estado inicial del sistema.
- - Se asegura de reiniciar todas las salidas (Output_0, Output_1, Output_2, Output_3).
-
-2. Ejecución inicial (S001)
-
-  - Condición de inicio: Input_0 o Input_8.
-  - Acciones: activa las salidas principales (Output_0 y Output_1) que corresponden al motor de la cinta transportadora.
-
-3. Detección de pieza (S002.1)
-
-  - Condición: sensor de entrada (Input0_1) detecta una pieza.
-  - Acción: habilita Output0_2 (p. ej., registro del sensor y arranque de temporización).
-
-4. Clasificación (S002.2 y S002.3)
-
-  - Dependiendo de la detección de color:
-    - Input0_2 activa Output0_3 (válvula de clasificación 1).
-    - Input0_3 activa Output0_4 (válvula de clasificación 2).
-
-5. Fin de ciclo y reset (S002.2.2 y S002.3.2)
-
-  - Una vez completada la expulsión, las salidas se resetean (R).
-  - El sistema queda listo para el siguiente objeto.
 
 ### Programación Ladder
 
