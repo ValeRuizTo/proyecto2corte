@@ -52,7 +52,8 @@ El sistema corresponde a una máquina clasificadora de objetos por color (sortin
   - En cada compartimiento de descarga hay un sensor infrarrojo final, encargado de verificar si la pieza llegó correctamente.
   - Si la pieza fue clasificada, el sistema detiene la banda transportadora y reinicia el ciclo para el siguiente objeto.
 
-![.](imagenesWiki/diagrama.jpg)
+  ![.](imagenesWiki/diagramabloques.png)
+
 
 ### Restricciones de diseño
 
@@ -88,8 +89,9 @@ El diseño del prototipo de Sorting Line with Color Detection se fundamenta en l
 
 - Priorización: los requerimientos deben clasificarse en críticos, deseables y opcionales según el impacto en la operación.
 
-#### 
-
+#### Estandar IEC 61131-3
+- Estándar internacional para lenguajes de programación de  Controladores Lógicos Programables (PLC) industriales, proporcionando un conjunto de lenguajes y estructuras comunes para la automatización, asegurando la independencia del fabricante y permitiendo la portabilidad y reutilización de código (incluye Ladder). [4]
+- 
 ##### Criterios específicos del proyecto
 
 - El sistema debe clasificar piezas de acuerdo con colores rojo, azul y verde, con un nivel de precisión ≥ 95 %.
@@ -98,10 +100,52 @@ El diseño del prototipo de Sorting Line with Color Detection se fundamenta en l
 
 - El prototipo debe permitir escalabilidad para incluir nuevos sensores/actuadores.
 
-- El sistema debe funcionar de forma continua durante al menos 2 horas sin intervención manual.
-
 - El código y los esquemáticos deben estar completamente documentados para garantizar mantenibilidad.
 
+
+### Definición de variables
+
+
+## Desarrollo del Sistema
+
+![.](imagenesWiki/diagrama.jpg)
+
+
+### Diagrama de función secuencial
+El sistema se diseñó bajo un enfoque de control secuencial por etapas (Step Sequence Control). Cada etapa (S) representa un estado del proceso, mientras que las transiciones se activan cuando se cumplen condiciones de sensores (entradas).
+
+El siguiente diagrama muestra la secuencia de operación implementada:
+
+![.](imagenesWiki/secuencia.jpg)
+
+#### Descripción de la secuencia:
+
+
+1. Inicio (S000)
+
+ - Estado inicial del sistema.
+ - Se asegura de reiniciar todas las salidas (Output_0, Output_1, Output_2, Output_3).
+
+2. Ejecución inicial (S001)
+
+  - Condición de inicio: Input_0 o Input_8.
+  - Acciones: activa las salidas principales (Output_0 y Output_1) que corresponden al motor de la cinta transportadora.
+
+3. Detección de pieza (S002.1)
+
+  - Condición: sensor de entrada (Input0_1) detecta una pieza.
+  - Acción: habilita Output0_2 (p. ej., registro del sensor y arranque de temporización).
+
+4. Clasificación (S002.2 y S002.3)
+
+  - Dependiendo de la detección de color:
+    - Input0_2 activa Output0_3 (válvula de clasificación 1).
+    - Input0_3 activa Output0_4 (válvula de clasificación 2).
+
+5. Fin de ciclo y reset (S002.2.2 y S002.3.2)
+
+  - Una vez completada la expulsión, las salidas se resetean (R).
+  - El sistema queda listo para el siguiente objeto.
 
 
 
@@ -114,4 +158,6 @@ El diseño del prototipo de Sorting Line with Color Detection se fundamenta en l
 [2] Emerson, “Válvulas solenoide normalmente cerradas,” Emerson. [En línea]. Disponible: https://www.https://www.emerson.com/es-py/catalog/solenoid-valves/normally-closed-solenoid-valves?fetchFacets=true#facet:&partsFacet:&modelsFacet:&facetLimit:&searchTerm:&partsSearchTerm:&modelsSearchTerm:&productBeginIndex:0&partsBeginIndex:0&modelsBeginIndex:0&orderBy:&partsOrderBy:&modelsOrderBy:&pageView:grid&minPrice:&maxPrice:&pageSize:&facetRange
 
 [3] ISO/IEC/IEEE, ISO/IEC/IEEE 29148:2018 Systems and software engineering — Life cycle processes — Requirements engineering, 2nd ed. Geneva, Switzerland: International Organization for Standardization, Nov. 2018. [Online]. Available: https://www.iso.org/standard/72089.html
+
+[4] “IEC 61131-3 Protocol Overview,” Real Time Automation, Inc., [En línea]. Disponible: https://www.rtautomation.com/technologies/control-iec-61131-3/
 
