@@ -435,6 +435,19 @@ Mientras tanto:
 
 Este paso refleja cómo el sistema cierra un ciclo de clasificación y se prepara de inmediato para procesar la siguiente ficha en la banda transportadora.
 
+<img src="imagenesWiki/hmi8.png" alt="hmi2" width="75%">
+
+El ciclo de clasificación para las fichas de color rojo sigue la misma lógica general del sistema:
+
+- El sistema espera la detección inicial en el sensor de entrada (IRStart).
+- Al presionar el pulsador correspondiente, la ficha avanza y queda representada como “dentro de la caja roja” en la HMI.
+- En este punto, el operador selecciona el botón asociado al sensor de color rojo, lo que activa el marcador interno (C2) y pone en marcha el temporizador correspondiente (TON2).
+- Una vez transcurrido el tiempo programado, se energiza la válvula 2 (V2), encargada de desviar las piezas clasificadas como rojas hacia el compartimiento central.
+
+De esta forma, la dinámica de clasificación para el color rojo es equivalente a la del color negro, variando únicamente la válvula y el temporizador asociados.
+
+<img src="imagenesWiki/hmi9.png" alt="hmi2" width="75%">
+
 
 ## Implementacion fisica
 
