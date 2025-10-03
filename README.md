@@ -390,13 +390,50 @@ En esta etapa, dentro de la cámara de detección se selecciona el color negro, 
 En este estado:
 
 -  Se activa el marcador interno (C1) que identifica la pieza como perteneciente al color negro.
--  El temporizador asociado (TON1) inicia la cuenta regresiva, calculada para que la ficha recorra la distancia necesaria hasta la válvula correspondiente.
--  Al finalizar el tiempo programado, la válvula 1 (V1) se energizará. Esta válvula está ubicada en la zona intermedia de la banda transportadora y es la encargada de desviar las piezas clasificadas como negras hacia su compartimiento.
+-  El temporizador asociado (TON1) debe esperar a que el sesnor de salida detecte para iniciar la cuenta regresiva, calculada para que la ficha recorra la distancia necesaria hasta la válvula correspondiente.
+-  Al finalizar el tiempo programado, la válvula 1 (V1) se energizará. Esta válvula está ubicada en la zona a la izquierda de la banda transportadora y es la encargada de desviar las piezas clasificadas como negras hacia su compartimiento.
 -  Durante este proceso, el compresor se mantiene encendido de manera continua, garantizando la presión de aire para la expulsión.
 
 De este modo, la lógica asegura que la ficha detectada como negra sea desviada en el punto exacto de la línea, manteniendo la secuencia de clasificación sincronizada.
 
 <img src="imagenesWiki/hmi51.png" alt="hmi2" width="75%">
+
+En esta fase, la ficha abandona la caja roja de detección de color. En la simulación de CODESYS, este evento se representa presionando el pulsador que corresponde al sensor de salida (IRT1, IRT2 o IRT3 según el color previamente seleccionado).
+
+En este estado:
+
+-  Al activarse el sensor de salida, se confirma que la ficha ya pasó por la cámara de color.
+-  Este evento habilita el inicio del temporizador (TON) correspondiente, el cual determina el tiempo exacto que debe transcurrir antes de accionar la válvula asociada al color detectado.
+-  La activación del temporizador sincroniza el avance de la ficha sobre la banda con la posición física de la válvula de expulsión.
+-  El compresor continúa en operación, asegurando que, al finalizar el tiempo de espera, la válvula pueda activarse de inmediato para desviar la pieza.
+
+Este paso es crítico porque establece la referencia temporal entre la detección del color y la expulsión de la ficha en la estación adecuada.
+
+
+<img src="imagenesWiki/hmi6.png" alt="hmi2" width="75%">
+
+Tras cumplirse el tiempo programado en el temporizador (TON1), la válvula 1 (V1) se activa. Esta válvula corresponde a la primera salida de la línea de clasificación y se encuentra ubicada en el lado izquierdo de la banda transportadora.
+
+En este estado:
+
+  - El actuador neumático asociado se desplaza, empujando la ficha hacia el compartimiento destinado al color negro.
+  - En la interfaz de CODESYS HMI, puede observarse la ficha en la línea de clasificación correspondiente, lo que confirma la correcta ejecución del desvío.
+  - Una vez que la válvula regresa a su posición de reposo, el sistema queda listo para recibir una nueva ficha y repetir el ciclo.
+
+Con esta etapa se valida la sincronización entre el sensor de color, el temporizador de retardo y la actuación de la válvula neumática, asegurando que la clasificación se realice en el momento exacto.
+
+<img src="imagenesWiki/hmi7.png" alt="hmi2" width="75%">
+
+En este estado, el sistema ha completado la expulsión de la primera ficha detectada y queda nuevamente listo para recibir otra pieza en la entrada. El sensor inicial (IRStart) permanece en espera de activación para comenzar un nuevo ciclo.
+
+Mientras tanto:
+
+-  En la línea de clasificación izquierda (asignada al color negro), el sensor final (IRTV1) ha detectado la presencia de una ficha correctamente desviada.
+-  Al activarse este sensor, se confirma que la pieza llegó al compartimiento correspondiente y se incrementa el contador asociado (CVCOUNTERC1), el cual registra la cantidad de piezas clasificadas en esa línea.
+-  En la visualización de CODESYS aparece la indicación B:1, lo que representa que el compartimiento de color negro contiene una ficha almacenada.
+-  El sistema está diseñado para admitir un máximo de dos fichas por línea, de modo que, si el contador llegara a ese límite, la lógica de control podría detener temporalmente la clasificación en esa salida o señalizar la condición en la HMI.
+
+Este paso refleja cómo el sistema cierra un ciclo de clasificación y se prepara de inmediato para procesar la siguiente ficha en la banda transportadora.
 
 
 ## Implementacion fisica
