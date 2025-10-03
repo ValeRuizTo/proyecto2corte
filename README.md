@@ -251,81 +251,88 @@ Los TON permiten crear retardos controlados en la secuencia, garantizando que lo
 <img width="1152" height="767" alt="image" src="https://github.com/user-attachments/assets/7e7af0b1-ae89-4831-8c75-62819be1e690" />
 <img width="1161" height="444" alt="image" src="https://github.com/user-attachments/assets/367271b7-132b-4d1c-b095-0e008ee0bd8a" />
 
-#### Descripción del Programa Ladder
+# Sorting Line – Color Detection (Ladder)
+**Descripción de los rungs 1–15 (C1) + notas para C2 y C3**
 
-- Red 1: Arranque y paro
-  - Botón Start enciende IRStart si no está activo Stop.
-  - Se establece la condición inicial del sistema.
+---
 
-- Red 2: Activación de motores
+## Rungs 1–15 (Color 1)
 
-  - Con IRStart y el sensor F1 activo, se activan M1 y M2.
+### **Rung 1 — Arranque y puesta a cero**
+- Condiciones: `Stop` (NC) y `Start` (NO).
+- Acciones: **`IRStart (S)`**, **`C1Visual (R)`**, **`C2Visual (R)`**, **`C3Visual (R)`**.
+- Propósito: dejar el sistema listo y limpiar visuales.
 
-- Red 3: Secuencia de validación
+### **Rung 2 — Activación de motores al detectar entrada**
+- Condiciones: `Stop` (NC), `IRStart`, `F1`.
+- Acciones: **`M1 (S)`**, **`M2 (S)`**, **`C1Visual (R)`**, **`C2Visual (R)`**, **`C3Visual (R)`**.
+- Propósito: arrancar la cinta/auxiliar cuando entra pieza y limpiar indicadores.
 
-  - Si se detecta IRT1, IRT2 o IRT3 junto con F2, se activa la señal IRF2.
+### **Rung 3 — Presencia en zona de clasificación (`IRF2`)**
+- Condiciones (serie): `Stop` (NC), `F2`, `M1`, `M2`, **y** cualquiera de:
+  - `IRT1` **o** `IRT2` **o** `IRT3` **o** `IRTL1` **o** `IRTL2` **o** `IRTL3`.
+- Acciones: **`IRF2 (S)`**.
+- Propósito: bandera de **pieza en F2** para sincronizar el disparo de válvulas.
 
-  - Esto sincroniza los pasos siguientes.
+### **Rung 4 — Preparar extensión C1**
+- Condiciones: `Stop` (NC), `C1`, `M1`, `M2`, **no** `LimitC1`.
+- Acciones: **`IRT1 (S)`**.
+- Propósito: ordenar desvío C1 si no está saturado.
 
-- Red 4–5: Control de temporización de V1
+### **Rung 5 — Disparo temporizado de V1**
+- Condiciones: `Stop` (NC), `IRF2`, `IRT1`.
+- Temporizador: `TON1` = **1 s**.
+- Al finalizar `TON1`: **`V1 (S)`**, **`IRT1 (R)`**, **`IRTV1 (S)`**, **`IRF2 (R)`**.
+- Propósito: sincronizar golpe de V1 tras 1 s y generar pulso de válvula.
 
-  - Si IRF2 y los motores están activos, se inicia el TON1 (1s).
+### **Rung 6 — Latch de “límite C1 alcanzado”**
+- Condiciones: `Stop` (NC), `C1`, `M1`, `M2`, `LimitC1`.
+- Acciones: **`IRTL1 (S)`**.
+- Propósito: memorizar que C1 llegó a su límite (se usa en el despeje).
 
-  - Al finalizar, se activa la válvula V1 y se resetea IRT1.
+### **Rung 7 — Pausa de despeje (5 s)**
+- Condiciones: `IRF2` **y** `IRTL1`.
+- Temporizador: `TON7` = **5 s**.
+- Al finalizar `TON7`: **`IRF2 (R)`**, **`M1 (R)`**, **`M2 (R)`**, **`IRTL1 (R)`**.
+- Efecto: **detener 5 s** para que la ficha **caiga al vacío** y despeje F2.
 
-- Red 6–10: Control de V2
+### **Rung 8 — Pulso corto y conteo de C1**
+- Condiciones: `Stop` (NC), `IRTV1`.
+- Temporizador: `TON2` = **0.5 s**.
+- Al finalizar `TON2`: **`IRTV1 (R)`**, **`V1 (R)`**, **`F3 ()`** (pulso de conteo).
+- Propósito: limitar V1 a 0.5 s y contar la pieza desviada.
 
-  - Uso de TON2 y TON3 con IRTV1 y IRF2.
+### **Rung 12 — Marca “FichaNegra” en F2**
+- Condiciones: `C1Visual` **y** `F2`.
+- Acción: **`FichaNegra ()`**.
 
-  - Activan válvula V2 después de un retardo de 2s.
+### **Rung 13 — Marca “FichaRoja” en F2**
+- Condiciones: `C2Visual` **y** `F2`.
+- Acción: **`FichaRoja ()`**.
 
-  - Luego V2 se apaga tras TON4 (0.5s) y habilita F4.
+### **Rung 14 — Marca “FichaAzul” en F2**
+- Condiciones: `C3Visual` **y** `F2`.
+- Acción: **`FichaAzul ()`**.
 
-- Red 11–15: Control de V3
+### **Rung 15 — Contador de C1 y saturación**
+- **CTU_0**: `CU = F3`, `RESET = Stop`, `PV = 2` → `CVCounterC1`.
+- Cuando `CV = 2` (Q activo) → **`LimitC1 ()`**.
+- Encadenamiento: `LimitC1` activa el **Rung 6** (`IRTL1`), y con `IRF2` el **Rung 7** ejecuta la **pausa de 5 s**, detiene `M1/M2` y permite que la ficha **excedente** caiga al vacío.
 
-  - Similar al anterior, con TON5 (3s) y TON6 (0.5s).
+---
 
-  - Maneja la válvula V3, activando F5 y reseteando las condiciones previas.
+## Implementación para **C2** y **C3**
+La lógica es **idéntica** a C1, cambiando símbolos y tiempos:
+- **C2**: `IRT2`, `V2`, `IRTV2`, `IRTL2`, `LimitC2`, **CTU_1** (`CU=F4`, `PV=2`), tiempos típicos: `TON3=2 s`, `TON4=0.5 s`, pausa `TON8=5 s`.
+- **C3**: `IRT3`, `V3`, `IRTV3`, `IRTL3`, `LimitC3`, **CTU_2** (`CU=F5`, `PV=2`), tiempos típicos: `TON5=3 s`, `TON6=0.5 s`, pausa `TON9=5 s`.
 
-- Red 16: Apagado de motores
+El mismo mecanismo de **saturación a 2 piezas** por color fuerza el despeje de 5 s para que la tercera ficha **no** se acumule.
 
-  - Cuando cualquiera de los sensores finales (F3, F4, F5) está activo, se apagan M1 y M2.
+---
 
-- Red 17: Reset general
-
-  - El botón Stop resetea:
-
-  - M1, M2, IRStart, IRF2, IRT1, IRT2, IRT3, etc.
-
-  - Esto asegura que el sistema vuelva a estado inicial.
-
-#### Contadores (CTU)
-
-- CTU_0 → Conteo asociado a F3 → almacena en CVCOUNTERC1.
-
-- CTU_1 → Conteo asociado a F4 → almacena en CVCOUNTERC2.
-
-- CTU_2 → Conteo asociado a F5 → almacena en CVCOUNTERC3.
-
-#### Secuencia de Operación
-
-- Arranque: Se presiona Start, se activa IRStart, luego M1 y M2.
-
-- Sensor F1 confirma inicio → motores siguen activos.
-
-- Secuencia de válvulas:
-
-- V1 tras 1s
-
-- V2 tras 2s
-
-- V3 tras 3s
-
-- Sensores F3, F4, F5 apagan motores en condiciones finales.
-
-- Contadores  registran ciclos de cada válvula.
-
-- Stop reinicia todo el sistema.
+## Rung final — **Botón Stop (reset maestro)**
+El último rung del programa usa el botón **`Stop`** para **resetear todo el sistema**: apaga `M1/M2`, borra `IRStart`, `IRF2`, `IRT1/2/3`, visuales (`C1/2/3Visual`) y demás latches.  
+**Propósito:** dejar el sistema en **estado inicial seguro** para un nuevo ciclo o para paro de emergencia.
 
 
 ## Implementación digital (codesys)
