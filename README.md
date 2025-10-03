@@ -441,12 +441,26 @@ El ciclo de clasificación para las fichas de color rojo sigue la misma lógica 
 
 - El sistema espera la detección inicial en el sensor de entrada (IRStart).
 - Al presionar el pulsador correspondiente, la ficha avanza y queda representada como “dentro de la caja roja” en la HMI.
-- En este punto, el operador selecciona el botón asociado al sensor de color rojo, lo que activa el marcador interno (C2) y pone en marcha el temporizador correspondiente (TON2).
+- En este punto, el operador selecciona el botón asociado al sensor de color rojo, el de la mitad, lo que activa el marcador interno (C2) y pone en marcha el temporizador correspondiente (TON2).
 - Una vez transcurrido el tiempo programado, se energiza la válvula 2 (V2), encargada de desviar las piezas clasificadas como rojas hacia el compartimiento central.
 
 De esta forma, la dinámica de clasificación para el color rojo es equivalente a la del color negro, variando únicamente la válvula y el temporizador asociados.
 
 <img src="imagenesWiki/hmi9.png" alt="hmi2" width="75%">
+
+Al igual que en el caso anterior, una vez que la ficha se encuentra dentro de la caja roja, es necesario activar el sensor de salida presionando el pulsador correspondiente en la simulación de CODESYS.
+
+En este estado:
+
+- El sensor de salida confirma que la ficha abandonó la zona de detección.
+- Este evento habilita el contador y el temporizador (TON2) asociados a la clasificación de color rojo.
+- Tras cumplirse el tiempo de retardo programado, se energiza la válvula 2 (V2), ubicada en la línea central de la banda.
+- La válvula desplaza el cilindro neumático correspondiente, desviando la ficha hacia su compartimiento de color rojo.
+
+En la visualización de CODESYS puede observarse este comportamiento, donde la ficha queda registrada en la línea central de clasificación, confirmando que fue correctamente identificada como color rojo.
+
+<img src="imagenesWiki/hmi10.png" alt="hmi2" width="75%">
+
 
 
 ## Implementacion fisica
