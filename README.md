@@ -183,64 +183,60 @@ Los TON permiten crear retardos controlados en la secuencia, garantizando que lo
    
 ### 2.3 Definición de Variables para la implementación ladder
 
-| Nombre            | Tipo | Atributo            | Descripción                                                                           |
-| ----------------- | ---- | ------------------- | ------------------------------------------------------------------------------------- |
-| `Stop`            | BOOL | Entrada             | Pulsador de paro normal del sistema                                                   |
-| `Start`           | BOOL | Entrada             | Pulsador de inicio del sistema                                                        |
-| `IRStart`         | BOOL | Entrada             | Sensor IR inicial (detecta objeto en la entrada de la cinta)                          |
-| `F1`              | BOOL | Entrada             | Final de carrera 1 / sensor de seguridad asociado                                     |
-| `M1`              | BOOL | Salida              | Motor 1 (cinta transportadora principal)                                              |
-| `M2`              | BOOL | Salida              | Motor 2 (elemento auxiliar, p. ej. vibrador de piezas)                                |
-| `C1`              | BOOL | Interna / Marcador  | Estado/flag de clasificación para color 1                                             |
-| `IRT1`            | BOOL | Entrada             | Sensor IR en posición de expulsión 1                                                  |
-| `TON1`            | TON  | Temporizador        | Temporizador para retardo de activación de `V1`                                       |
-| `V1`              | BOOL | Salida              | Válvula 1 (desvía pieza color 1)                                                      |
-| `IRTV1`           | BOOL | Entrada             | Sensor IR de verificación en compartimiento 1                                         |
-| `ET1`             | TIME | Tiempo              | Tiempo acumulado de `TON1`                                                            |
-| `ET`              | TIME | Tiempo              | Variable auxiliar de tiempo general                                                   |
-| `TON2`            | TON  | Temporizador        | Temporizador para clasificación color 2                                               |
-| `F3`              | BOOL | Entrada             | Final de carrera 3 / sensor de seguridad asociado                                     |
-| `CVCOUNTERC1`     | WORD | Contador            | Contador de piezas clasificadas en compartimiento 1                                   |
-| `C2`              | BOOL | Interna / Marcador  | Estado/flag de clasificación para color 2                                             |
-| `IRT2`            | BOOL | Entrada             | Sensor IR en posición de expulsión 2                                                  |
-| `ET2`             | TIME | Tiempo              | Tiempo acumulado de `TON2`                                                            |
-| `TON3`            | TON  | Temporizador        | Temporizador auxiliar para expulsión en color 2                                       |
-| `TON4`            | TON  | Temporizador        | Temporizador auxiliar para control de `M2` o sincronización                           |
-| `V2`              | BOOL | Salida              | Válvula 2 (desvía pieza color 2)                                                      |
-| `IRTV2`           | BOOL | Entrada             | Sensor IR de verificación en compartimiento 2                                         |
-| `F4`              | BOOL | Entrada             | Final de carrera 4 / sensor de seguridad asociado                                     |
-| `CVCOUNTERC2`     | WORD | Contador            | Contador de piezas clasificadas en compartimiento 2                                   |
-| `C3`              | BOOL | Interna / Marcador  | Estado/flag de clasificación para color 3                                             |
-| `IRT3`            | BOOL | Entrada             | Sensor IR en posición de expulsión 3                                                  |
-| `TON5`            | TON  | Temporizador        | Temporizador para expulsión en color 3                                                |
-| `TON6`            | TON  | Temporizador        | Temporizador auxiliar en clasificación color 3                                        |
-| `ET3`             | TIME | Tiempo              | Tiempo acumulado de `TON5` / `TON6`                                                   |
-| `V3`              | BOOL | Salida              | Válvula 3 (desvía pieza color 3)                                                      |
-| `IRTV3`           | BOOL | Entrada             | Sensor IR de verificación en compartimiento 3                                         |
-| `F5`              | BOOL | Entrada             | Final de carrera 5 / sensor de seguridad asociado                                     |
-| `CVCOUNTERC3`     | WORD | Contador            | Contador de piezas clasificadas en compartimiento 3                                   |
-| `F2`              | BOOL | Entrada             | Final de carrera 2 / sensor de seguridad asociado                                     |
-| `IRF2`            | BOOL | Entrada             | Sensor IR al final del compartimiento 2                                               |
-| `LimitC1`         | BOOL | Entrada             | Límite mecánico/fin de carrera del compartimiento 1 (tope físico)                     |
-| `LimitC2`         | BOOL | Entrada             | Límite mecánico/fin de carrera del compartimiento 2                                   |
-| `LimitC3`         | BOOL | Entrada             | Límite mecánico/fin de carrera del compartimiento 3                                   |
-| `TON7`            | TON  | Temporizador        | Temporizador auxiliar (p. ej., anti-rebote o ventana de validación general)           |
-| `ET4`             | TIME | Tiempo              | Tiempo acumulado de `TON7`                                                            |
-| `IRTL1`           | BOOL | Entrada             | Sensor IR en línea/track previo al desvío 1 (pre-lectura)                             |
-| `IRLC1`           | BOOL | Entrada             | Sensor IR en línea/compartimiento 1 (confirmación de llegada)                         |
-| `IRTL2`           | BOOL | Entrada             | Sensor IR en línea/track previo al desvío 2                                           |
-| `TON8`            | TON  | Temporizador        | Temporizador auxiliar asociado a eventos del desvío 2                                 |
-| `ET5`             | TIME | Tiempo              | Tiempo acumulado de `TON8`                                                            |
-| `IRTL3`           | BOOL | Entrada             | Sensor IR en línea/track previo al desvío 3                                           |
-| `TON9`            | TON  | Temporizador        | Temporizador auxiliar asociado a eventos del desvío 3                                 |
-| `V1cambio`        | BOOL | Interna / Control   | Flag interno para gestión de cambio de estado de `V1` (lógica de conmutación)         |
-| `v1visualizacion` | BOOL | Visualización / HMI | Bit de visualización en HMI para estado de `V1`                                       |
-| `C1Visual`        | BOOL | Visualización / HMI | Indicador HMI de selección/estado de color 1                                          |
-| `FichaNegra`      | BOOL | Visualización / HMI | Indicador HMI de detección/clasificación de ficha negra (mapeado a color 1 si aplica) |
-| `C2Visual`        | BOOL | Visualización / HMI | Indicador HMI de selección/estado de color 2                                          |
-| `FichaRoja`       | BOOL | Visualización / HMI | Indicador HMI de detección/clasificación de ficha roja (mapeado a color 2)            |
-| `C3Visual`        | BOOL | Visualización / HMI | Indicador HMI de selección/estado de color 3                                          |
-| `FichaAzul`       | BOOL | Visualización / HMI | Indicador HMI de detección/clasificación de ficha azul (mapeado a color 3)            |
+| Nombre  | Tipo | Atributo | Descripción |
+|---------|------|----------|-------------|
+| Stop    | BOOL | Entrada  | Pulsador de paro normal del sistema |
+| Start   | BOOL | Entrada  | Pulsador de inicio del sistema |
+| F1      | BOOL | Entrada  | Final de carrera 1  |
+| F2      | BOOL | Entrada  | Final de carrera 2  |
+| F3      | BOOL | Entrada  | Final de carrera 3 |
+| F4      | BOOL | Entrada  | Final de carrera 4  |
+| F5      | BOOL | Entrada  | Final de carrera 5  |
+| LimitC1 | BOOL | Entrada  | Límite del compartimiento 1 |
+| LimitC2 | BOOL | Entrada  | Límite del compartimiento 2 |
+| LimitC3 | BOOL | Entrada  | Límite del compartimiento 3 |
+| M1     | BOOL | Salida   | Motor 1 (cinta transportadora principal) |
+| M2     | BOOL | Salida   | Motor 2 (elemento auxiliar, p. ej. vibrador de piezas) |
+| V1     | BOOL | Salida   | Válvula 1 (desvía pieza color 1) |
+| V2     | BOOL | Salida   | Válvula 2 (desvía pieza color 2) |
+| V3     | BOOL | Salida   | Válvula 3 (desvía pieza color 3) |
+| TON1   | TON  | Temporizador | Retardo de activación de V1 |
+| TON2   | TON  | Temporizador | Retardo extensión/contracción V1 |
+| TON3   | TON  | Temporizador | Retardo de activación de V2 |
+| TON4   | TON  | Temporizador | Retardo extensión/contracción V2 |
+| TON5   | TON  | Temporizador | Retardo de activación de V1  |
+| TON6   | TON  | Temporizador | Retardo extensión/contracción V3|
+| TON7   | TON  | Temporizador | Retardo 5s, compartimiento lleno |
+| ET     | TIME | Tiempo |Tiempo acumulado de TON2/TON4/TON6 |
+| ET1    | TIME | Tiempo | Tiempo acumulado de TON1 |
+| ET2    | TIME | Tiempo | Tiempo acumulado de TON3 |
+| ET3    | TIME | Tiempo | Tiempo acumulado de TON5 |
+| ET9    | TIME | Tiempo | Tiempo acumulado de TON7 |
+| CVCOUNTERC1  | WORD | Contador | Contador de piezas clasificadas en compartimiento 1 |
+| CVCOUNTERC2  | WORD | Contador | Contador de piezas clasificadas en compartimiento 2 |
+| CVCOUNTERC3  | WORD | Contador | Contador de piezas clasificadas en compartimiento 3 |
+| IRStart       | BOOL | Interna / Relay | Relevador interno asociado a arranque |
+| IRT1          | BOOL | Interna / Relay | Relevador interno posición de expulsión 1 |
+| IRTV1         | BOOL | Interna / Relay | Relevador interno V1 |
+| IRT2          | BOOL | Interna / Relay | Relevador interno posición de expulsión 2 |
+| IRTV2         | BOOL | Interna / Relay | Relevador interno V2 |
+| IRT3          | BOOL | Interna / Relay | Relevador interno posición de expulsión 3 |
+| IRTV3         | BOOL | Interna / Relay | Relevador interno V3 |
+| IRF2          | BOOL | Interna / Relay | Relevador interno sensor F2 |
+| IRTL1         | BOOL | Interna / Relay | Relevador interno Limite Compartimiento 1 |
+| IRTL2         | BOOL | Interna / Relay | Relevador interno Limite Compartimiento 2 |
+| IRTL3         | BOOL | Interna / Relay | Relevador interno Limite Compartimiento 3 |
+| C1            | BOOL | Interna / Marcador | Flag de clasificación para color 1 |
+| C2            | BOOL | Interna / Marcador | Flag de clasificación para color 2 |
+| C3            | BOOL | Interna / Marcador | Flag de clasificación para color 3 |
+| v1visualizacion | BOOL | HMI      | Bit de visualización en HMI para estado de V1 |
+| C1Visual        | BOOL | HMI      | Indicador HMI de selección/estado de color 1 |
+| FichaNegra      | BOOL | HMI      | Indicador HMI de detección/clasificación de ficha negra (mapeado a color 1) |
+| C2Visual        | BOOL | HMI      | Indicador HMI de selección/estado de color 2 |
+| FichaRoja       | BOOL | HMI      | Indicador HMI de detección/clasificación de ficha roja (mapeado a color 2) |
+| C3Visual        | BOOL | HMI      | Indicador HMI de selección/estado de color 3 |
+| FichaAzul       | BOOL | HMI      | Indicador HMI de detección/clasificación de ficha azul (mapeado a color 3) |
+
 
 
 #### LADDER
