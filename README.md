@@ -468,7 +468,16 @@ En la visualización de CODESYS puede observarse este comportamiento, donde la f
 
 <img src="imagenesWiki/hmi10.png" alt="hmi2" width="75%">
 
+En la visualización de CODESYS HMI se observa que la ficha roja ha sido correctamente desviada hacia la línea central de clasificación. El sensor final de esta línea (IRTV2) detecta la pieza y el contador incrementa su valor, reflejado como R:1 en pantalla. Esto confirma la clasificación exitosa de una ficha roja.
 
+A continuación, el ciclo se repite con una nueva pieza:
+
+-  El sensor de entrada (IRStart) detecta otra ficha en la banda.
+-  La ficha es transportada hasta la caja roja de detección de color.
+-  En esta ocasión, se selecciona el pulsador de la derecha, lo que simula que el sensor de color identifica la ficha como azul.
+-  El sistema queda en espera de que se active el sensor de salida de la caja roja, condición necesaria para iniciar el conteo del temporizador (TON5) que sincroniza la expulsión hacia la última línea de clasificación.
+
+De esta manera, se cierra el ciclo de la ficha roja y se prepara la secuencia para la clasificación del color azul.
 
 ## Implementacion fisica
 
