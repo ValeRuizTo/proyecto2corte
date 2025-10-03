@@ -128,7 +128,8 @@ A partir de las variables generales definidas anteriormente, el sistema se dise�
 
 El siguiente diagrama muestra la secuencia de operación implementada:
 
-<img width="1216" height="913" alt="SequentialChartSortingLine" src="https://github.com/user-attachments/assets/3c64b188-6eba-4a44-9ff2-af36ffa9c116" />
+<img width="1025" height="769" alt="image" src="https://github.com/user-attachments/assets/7de04ad9-6228-4bc6-8c62-1da8e9fab404" />
+
 
 
 #### Descripción de la secuencia:
@@ -137,27 +138,25 @@ El siguiente diagrama muestra la secuencia de operación implementada:
 1. Inicio (S000)
 
  - Estado inicial del sistema.
+ - Condición de inicio: Input_5 o Input_6 o Input_7, es decir que la pieza clasificada anterior, haya llegado a su destino.
  - Se asegura de reiniciar todas las salidas (Output_0, Output_1, Output_2, Output_3).
 
 2. Ejecución inicial (S001)
 
-  - Condición de inicio: Input_0 o Input_8.
-  - Acciones: activa las salidas principales (Output_0 y Output_1) que corresponden al motor de la cinta transportadora.
+  - Condición de inicio: Input_0 o Input_8. Es decir, el Start, y que una pieza haya entrado al sistema.
+  - Acciones: activa las salidas principales (Output_0 y Output_1) que corresponden al motor de la cinta transportadora y el compresor.
 
-3. Detección de pieza (S002.1)
+3. Detección de pieza y Clasificación (S002.1, S002.2 y S002.3)
 
-  - Condición: sensor de entrada (Input0_1) detecta una pieza.
-  - Acción: habilita Output0_2 (p. ej., registro del sensor y arranque de temporización).
-
-4. Clasificación (S002.2 y S002.3)
-
+  - Condición: sensor de entrada del color 1 (Input0_1) detecta una pieza, asi como ser sensado por el fototransitor posterior a la detección de color (Input_04)
   - Dependiendo de la detección de color:
-    - Input0_2 activa Output0_3 (válvula de clasificación 1).
-    - Input0_3 activa Output0_4 (válvula de clasificación 2).
+    - Input0_1 activa Output0_2 (válvula de clasificación 1).
+    - Input0_2 activa Output0_3 (válvula de clasificación 2).
+    - Input0_3 activa Output0_4 (válvula de clasificación 3).
 
-5. Fin de ciclo y reset (S002.2.2 y S002.3.2)
+5. Fin de ciclo y reset (S002.1.2, S002.2.2 y S002.3.2)
 
-  - Una vez completada la expulsión, las salidas se resetean (R).
+  - Una vez completada la expulsión, las salidas se resetean (R), las válvulas vuelven a su posición inicial.
   - El sistema queda listo para el siguiente objeto.
 
 
