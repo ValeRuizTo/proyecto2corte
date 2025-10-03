@@ -361,7 +361,7 @@ En este estado:
 -  El motor principal de la banda transportadora (M1) se activa, generando el movimiento de las piezas.
 -  La ficha que se encontraba en la posición inicial desaparece de la interfaz, lo que representa que está siendo transportada por la banda.
 
-<img src="imagenesWiki/hmi2.png" alt="hmi2" width="50%">
+<img src="imagenesWiki/hmi2.png" alt="hmi2" width="75%">
 
 En la tercera captura de la visualización en CODESYS HMI, la ficha alcanza el inicio de la banda y activa el sensor de entrada (IRStart).
 
@@ -372,7 +372,7 @@ En este estado:
 -  En la interfaz de CODESYS, el indicador luminoso asociado a IRStart cambia de estado, mostrando que el sensor ha detectado la presencia de una ficha.
 -  Este evento es clave, ya que confirma que una pieza ingresó correctamente al proceso y habilita las siguientes etapas de transporte hacia la cámara de color.
 
-[.](imagenesWiki/hmi3.png)
+<img src="imagenesWiki/hmi3.png" alt="hmi2" width="75%">
 
 En esta etapa la ficha avanza sobre la banda transportadora y desaparece de la visualización, lo que representa que se encuentra dentro de la caja roja de detección de color.
 
@@ -385,7 +385,7 @@ En este punto:
 
 De esta manera, el sistema sincroniza la detección del color con el posicionamiento de la pieza, asegurando que llegue al punto exacto de expulsión antes de desviar la ficha hacia su compartimiento.
 
-[.](imagenesWiki/hmi4.png)
+<img src="imagenesWiki/hmi4.png" alt="hmi2" width="75%">
 
 En esta etapa, dentro de la cámara de detección se selecciona el color negro, presionando el pulsador correspondiente en la interfaz de CODESYS.
 
@@ -398,7 +398,7 @@ En este estado:
 
 De este modo, la lógica asegura que la ficha detectada como negra sea desviada en el punto exacto de la línea, manteniendo la secuencia de clasificación sincronizada.
 
-[.](imagenesWiki/hmi5.png)
+<img src="imagenesWiki/hmi5.png" alt="hmi2" width="75%">
 
 
 ## Implementacion fisica
