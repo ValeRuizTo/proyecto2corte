@@ -244,13 +244,10 @@ Los TON permiten crear retardos controlados en la secuencia, garantizando que lo
 
 
 #### LADDER
-![.](imagenesWiki/codesys1.png)
-
-![.](imagenesWiki/codesys2.png)
-
-![.](imagenesWiki/codesys3.png)
-
-![.](imagenesWiki/codesys4.png)
+<img width="1157" height="820" alt="image" src="https://github.com/user-attachments/assets/c8f18daf-3464-4f0d-b563-005f7722627f" />
+<img width="1164" height="823" alt="image" src="https://github.com/user-attachments/assets/c301014f-1043-48ff-a436-a1d7f5296ea3" />
+<img width="1150" height="729" alt="image" src="https://github.com/user-attachments/assets/693f42b0-1187-4869-8260-f26f82b243a6" />
+<img width="1158" height="795" alt="image" src="https://github.com/user-attachments/assets/6041b794-747f-4082-9038-467ff8168179" />
 
 
 #### Descripción del Programa Ladder
