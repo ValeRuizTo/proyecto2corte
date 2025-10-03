@@ -490,6 +490,16 @@ De esta manera, se cierra el ciclo de la ficha roja y se prepara la secuencia pa
 
 <img src="imagenesWiki/hmi11.png" alt="hmi2" width="75%">
 
+Cuando la ficha identificada como azul pasa por el sensor de salida de la caja roja, se activa el evento que inicia el temporizador (TON5) y el contador (CVCOUNTERC3) correspondientes a esta línea.
+
+En este estado:
+
+-  El temporizador mide el tiempo que tarda la ficha en recorrer la banda hasta llegar al punto de expulsión.
+-  Al cumplirse este tiempo, se energiza la válvula 3 (V3), que corresponde a la última línea de clasificación.
+-  La válvula acciona el cilindro neumático y desvía la ficha hacia el compartimiento de color azul.
+-  El sensor final de la línea azul (IRTV3) confirma la llegada de la pieza y actualiza el contador en la visualización HMI.
+
+El proceso se repite sucesivamente con las fichas que ingresen al sistema, hasta que cada línea alcance su límite de dos fichas clasificadas, que es la capacidad máxima definida por la lógica del proyecto.
 
 ## Implementacion fisica
 
