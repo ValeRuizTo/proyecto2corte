@@ -341,6 +341,65 @@ Interfaz HMI
 
 ![.](imagenesWiki/hmi.png)
 
+En la primera captura de la visualización en CODESYS HMI, el sistema se encuentra en estado apagado. Esto se debe a que el pulsador de paro (Stop) está activado, lo cual bloquea la operación de todos los actuadores y mantiene las salidas en reposo.
+
+En este estado:
+  - El motor de la banda transportadora (M1) está detenido.
+  - Ninguna de las válvulas (V1, V2, V3) está energizada.
+  - No se registran señales de sensores (IRStart, IRT1, IRT2, IRT3) ya que no hay piezas en circulación.
+  - Los indicadores en la HMI muestran el sistema en espera, sin proceso en ejecución.
+
+Este punto representa la condición de seguridad inicial antes de que el operador active el pulsador de inicio (Start) y comience el ciclo automático de clasificación.
+
+![.](imagenesWiki/hmi1.png)
+
+En la segunda captura de la visualización en CODESYS HMI, el operador presiona el pulsador de inicio (Start), lo que habilita la secuencia automática del sistema.
+
+En este estado:
+
+-  El pulsador de paro (Stop) está desactivado, por lo que el sistema queda libre para operar.
+-  El motor principal de la banda transportadora (M1) se activa, generando el movimiento de las piezas.
+-  La ficha que se encontraba en la posición inicial desaparece de la interfaz, lo que representa que está siendo transportada por la banda.
+
+[.](imagenesWiki/hmi1.png)
+
+En la tercera captura de la visualización en CODESYS HMI, la ficha alcanza el inicio de la banda y activa el sensor de entrada (IRStart).
+
+En este estado:
+
+-  Al presionar el pulsador físico del sensor, se simula el paso de la ficha por la zona de detección.
+-  El compresor se activa para mantener la presión de aire disponible en el sistema neumático.
+-  En la interfaz de CODESYS, el indicador luminoso asociado a IRStart cambia de estado, mostrando que el sensor ha detectado la presencia de una ficha.
+-  Este evento es clave, ya que confirma que una pieza ingresó correctamente al proceso y habilita las siguientes etapas de transporte hacia la cámara de color.
+
+[.](imagenesWiki/hmi2.png)
+
+En esta etapa la ficha avanza sobre la banda transportadora y desaparece de la visualización, lo que representa que se encuentra dentro de la caja roja de detección de color.
+
+En este punto:
+
+-  El sensor de color determina la tonalidad de la ficha y, en función de ella, se selecciona el canal de clasificación correspondiente.
+-  En la implementación de CODESYS, este sensor se simula mediante tres pulsadores, cada uno asociado a un color distinto (negro, rojo o azul). El pulsador que se presione define el color detectado y activa el contador de tiempo asignado a esa línea.
+-  Desde el instante en que se presiona el pulsador de color, el temporizador (TON1, TON2 o TON5) comienza a contar el retardo necesario para que la ficha recorra la distancia hasta su válvula de expulsión.
+-  El compresor permanece encendido, garantizando la presión neumática para la activación inmediata de la válvula correspondiente cuando el temporizador expire.
+
+De esta manera, el sistema sincroniza la detección del color con el posicionamiento de la pieza, asegurando que llegue al punto exacto de expulsión antes de desviar la ficha hacia su compartimiento.
+
+[.](imagenesWiki/hmi3.png)
+
+En esta etapa, dentro de la cámara de detección se selecciona el color negro, presionando el pulsador correspondiente en la interfaz de CODESYS.
+
+En este estado:
+
+-  Se activa el marcador interno (C1) que identifica la pieza como perteneciente al color negro.
+-  El temporizador asociado (TON1) inicia la cuenta regresiva, calculada para que la ficha recorra la distancia necesaria hasta la válvula correspondiente.
+-  Al finalizar el tiempo programado, la válvula 1 (V1) se energizará. Esta válvula está ubicada en la zona intermedia de la banda transportadora y es la encargada de desviar las piezas clasificadas como negras hacia su compartimiento.
+-  Durante este proceso, el compresor se mantiene encendido de manera continua, garantizando la presión de aire para la expulsión.
+
+De este modo, la lógica asegura que la ficha detectada como negra sea desviada en el punto exacto de la línea, manteniendo la secuencia de clasificación sincronizada.
+
+[.](imagenesWiki/hmi4.png)
+
 
 ## Implementacion fisica
 
