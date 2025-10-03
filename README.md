@@ -375,7 +375,7 @@ En este estado se pueden observar muchos mas elementos en el HMI, esto se debe a
   - La animación de la valvula moviendose, para esta se tuvieron que duplicar los objetos de esta que se movian, y cuando V1 se cumpliera es decir pasara el tiempo respectivo del timer estos desaparecieran y los invisibles al tener NOT V1 estos aparecen solamente en el momento que esta variable esta en estado TRUE.
   - La ficha empujada en su lugar respectivo, para esto tambien se le asigno a la ficha su correspondiente V pero de igual manera negada para que solo apareciera cuando V estuviera activa.
 
-![ImgVarInvisible](imagenesWiki/ImgVarInvisible.png)
+![ImgVarInvisible](imagenesWiki/ImagenVarInvisible.png)
 
 
 
