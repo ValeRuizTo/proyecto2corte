@@ -240,12 +240,20 @@ Los TON permiten crear retardos controlados en la secuencia, garantizando que lo
 
 
 #### LADDER
-<img width="1157" height="820" alt="image" src="https://github.com/user-attachments/assets/c8f18daf-3464-4f0d-b563-005f7722627f" />
-<img width="1164" height="823" alt="image" src="https://github.com/user-attachments/assets/c301014f-1043-48ff-a436-a1d7f5296ea3" />
-<img width="1150" height="729" alt="image" src="https://github.com/user-attachments/assets/693f42b0-1187-4869-8260-f26f82b243a6" />
-<img width="1158" height="795" alt="image" src="https://github.com/user-attachments/assets/6041b794-747f-4082-9038-467ff8168179" />
-<img width="1152" height="767" alt="image" src="https://github.com/user-attachments/assets/7e7af0b1-ae89-4831-8c75-62819be1e690" />
-<img width="1161" height="444" alt="image" src="https://github.com/user-attachments/assets/367271b7-132b-4d1c-b095-0e008ee0bd8a" />
+<img width="1545" height="633" alt="image" src="https://github.com/user-attachments/assets/576a4f25-fd58-4985-9723-955b202fb0a4" />
+
+<img width="1250" height="735" alt="image" src="https://github.com/user-attachments/assets/93df8e3f-ba39-45b0-b278-a635b2f31ba1" />
+
+<img width="1300" height="771" alt="image" src="https://github.com/user-attachments/assets/1c52fa3a-2b2c-4547-a409-3b45ca038af7" />
+
+<img width="1244" height="806" alt="image" src="https://github.com/user-attachments/assets/7dd9765e-fcbe-4e3b-89cf-6c93d6c20902" />
+
+<img width="1246" height="818" alt="image" src="https://github.com/user-attachments/assets/0eba9dce-6dc2-4d4c-aae2-f4f0c8e9fcf5" />
+
+<img width="1239" height="680" alt="image" src="https://github.com/user-attachments/assets/67827993-2fb6-4dfc-9a78-bff17d7fcf17" />
+
+<img width="1259" height="506" alt="image" src="https://github.com/user-attachments/assets/34c46887-3275-4257-96ef-7a5197372873" />
+
 
 # Descripción funcionamiento del Ladder
 
