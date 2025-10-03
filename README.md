@@ -479,6 +479,9 @@ A continuación, el ciclo se repite con una nueva pieza:
 
 De esta manera, se cierra el ciclo de la ficha roja y se prepara la secuencia para la clasificación del color azul.
 
+<img src="imagenesWiki/hmi11.png" alt="hmi2" width="75%">
+
+
 ## Implementacion fisica
 
 ## Validación manual
