@@ -251,8 +251,7 @@ Los TON permiten crear retardos controlados en la secuencia, garantizando que lo
 <img width="1152" height="767" alt="image" src="https://github.com/user-attachments/assets/7e7af0b1-ae89-4831-8c75-62819be1e690" />
 <img width="1161" height="444" alt="image" src="https://github.com/user-attachments/assets/367271b7-132b-4d1c-b095-0e008ee0bd8a" />
 
-# Sorting Line – Color Detection (Ladder)
-**Descripción de los rungs 1–15 (C1) + notas para C2 y C3**
+# Descripción funcionamiento del Ladder
 
 ---
 
@@ -333,6 +332,16 @@ El mismo mecanismo de **saturación a 2 piezas** por color fuerza el despeje de 
 ## Rung final — **Botón Stop (reset maestro)**
 El último rung del programa usa el botón **`Stop`** para **resetear todo el sistema**: apaga `M1/M2`, borra `IRStart`, `IRF2`, `IRT1/2/3`, visuales (`C1/2/3Visual`) y demás latches.  
 **Propósito:** dejar el sistema en **estado inicial seguro** para un nuevo ciclo o para paro de emergencia.
+
+---
+
+## Pruebas de error realizadas
+Se realizaron pruebas de validación y manejo de errores, todas con resultados exitosos:
+
+- **Detección de color sin objeto presente:** el sistema no ejecutó ninguna acción indebida.  
+- **Detección de objeto en `F2` sin motores activos ni color detectado:** el sistema no activó válvulas ni latches.  
+- **Motores encendidos y `F2` activo pero sin color detectado:** no se ejecutó ninguna acción de clasificación.  
+
 
 
 ## Implementación digital (codesys)
