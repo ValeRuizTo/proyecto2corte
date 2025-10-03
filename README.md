@@ -398,7 +398,7 @@ En este estado:
 
 De este modo, la lógica asegura que la ficha detectada como negra sea desviada en el punto exacto de la línea, manteniendo la secuencia de clasificación sincronizada.
 
-<img src="imagenesWiki/hmi5.png" alt="hmi2" width="75%">
+<img src="imagenesWiki/hmi51.png" alt="hmi2" width="75%">
 
 
 ## Implementacion fisica
