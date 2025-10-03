@@ -361,7 +361,7 @@ En este estado:
 -  El motor principal de la banda transportadora (M1) se activa, generando el movimiento de las piezas.
 -  La ficha que se encontraba en la posición inicial desaparece de la interfaz, lo que representa que está siendo transportada por la banda.
 
-[.](imagenesWiki/hmi2.png)
+<img src="imagenesWiki/hmi2.png" alt="hmi2" width="50%">
 
 En la tercera captura de la visualización en CODESYS HMI, la ficha alcanza el inicio de la banda y activa el sensor de entrada (IRStart).
 
