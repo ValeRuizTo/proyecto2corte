@@ -248,7 +248,8 @@ Los TON permiten crear retardos controlados en la secuencia, garantizando que lo
 <img width="1164" height="823" alt="image" src="https://github.com/user-attachments/assets/c301014f-1043-48ff-a436-a1d7f5296ea3" />
 <img width="1150" height="729" alt="image" src="https://github.com/user-attachments/assets/693f42b0-1187-4869-8260-f26f82b243a6" />
 <img width="1158" height="795" alt="image" src="https://github.com/user-attachments/assets/6041b794-747f-4082-9038-467ff8168179" />
-
+<img width="1152" height="767" alt="image" src="https://github.com/user-attachments/assets/7e7af0b1-ae89-4831-8c75-62819be1e690" />
+<img width="1161" height="444" alt="image" src="https://github.com/user-attachments/assets/367271b7-132b-4d1c-b095-0e008ee0bd8a" />
 
 #### Descripción del Programa Ladder
 
